@@ -1,6 +1,7 @@
 package br.com.zenon;
 
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -10,37 +11,32 @@ import java.nio.file.PathMatcher;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.swing.text.html.parser.Parser;
+
 public class RedenrizadorMarkDown {
 
-    public List<String> redenrizar(Path diretorioMD) {
-        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
-        try (Stream<Path> streamMDs = Files.list(diretorioMD)) {
-            List<Path> arquivosMD = streamMDs
-                    .filter(matcher::matches)
-                    .sorted()
-                    .toList();
+    public List<Capitulo> redenrizar(Path diretorioMDs) {
 
-            if (arquivosMD.isEmpty()) {
-                throw new IllegalStateException("Não foram encontrados capítulos (arquivos .md) no diretório: " + diretorioMD.toAbsolutePath());
-            }
+        var repositorioMarkDowns = new RepositorioMarkDowns();
 
-        } catch (IOException ex) {
-            throw new IllegalStateException("Erro tentando encontrar arquivos .md em " + diretorioMD.toAbsolutePath(), ex);
-        }
+        List<Capitulo> capitulos = repositorioMarkDowns.buscar(diretorioMDs);
 
-        List<String> htmls = List.of();
+        return capitulos.stream().map(capitulo -> {
 
-        return arquivosMD.stream().map(arquivoMD -> {
+            var arquivoMD = capitulo.getArquivoMarkDown();
+            var capitulo = new Capitulo();
             Parser parser = Parser.builder().build();
             Node document = null;
             try {
-                document = parser.parseReader(Files.newBufferedReader(arquivoMD));
+                String markDown = capitulo.getMarkDown();
+                document = parser.parse(markDown);
                 document.accept(new AbstractVisitor() {
                     @Override
                     public void visit(Heading heading) {
                         if (heading.getLevel() == 1) {
                             // capítulo
                             String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
+                            capitulo.setTitulo(tituloDoCapitulo);
                             // TODO: usar título do capítulo
                         } else if (heading.getLevel() == 2) {
                             // seção
@@ -51,17 +47,20 @@ public class RedenrizadorMarkDown {
 
                 });
             } catch (Exception ex) {
-                throw new IllegalStateException("Erro ao fazer parse do arquivo " + arquivoMD, ex);
+                throw new IllegalStateException("Erro ao fazer parse do arquivo " + capitulo.getArquivoMarkDown(), ex);
             }
 
             try {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
-                return renderer.render(document);
-                
+                String html = renderer.render(document);
+                capitulo.setHtml(html);
+                return capitulo;
 
             } catch (Exception ex) {
-                throw new IllegalStateException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
+                throw new IllegalStateException(
+                        "Erro ao renderizar para HTML o arquivo " + capitulo.getArquivoMarkDown(), ex);
             }
         }).toList();
+
     }
 }

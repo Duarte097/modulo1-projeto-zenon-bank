@@ -4,9 +4,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class GeradorPDF {
+import jakarta.enterprise.context.ApplicationScoped;
+@ApplicationScoped
+public class GeradorPDF implements GeradorEbook {
 
-    public void gerarPDF(Ebook ebook) {
+    public void gerar(Ebook ebook) {
 
         List<Capitulo> capitulos = ebook.getCapitulos();
         Path arquivoSaida = ebook.getArquivoSaida();

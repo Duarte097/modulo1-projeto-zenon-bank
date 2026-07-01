@@ -8,7 +8,10 @@ import java.nio.file.PathMatcher;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class RepositorioMarkDowns {
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class RepositorioMarkDownsDiretorio implements RepositorioMarkDown {
     public List<Capitulo> buscar(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
         try (Stream<Path> streamMDs = Files.list(diretorioMD)) {

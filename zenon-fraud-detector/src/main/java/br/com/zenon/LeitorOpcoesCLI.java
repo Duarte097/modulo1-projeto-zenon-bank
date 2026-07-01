@@ -9,10 +9,10 @@ import java.util.Comparator;
 
 import javax.swing.text.html.Option;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class LeitorOpcoesCLI {
-
-
-
     public ParametrosCotuba ler(String[] args){
         var options = new Options();
 

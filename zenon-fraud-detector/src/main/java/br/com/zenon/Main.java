@@ -10,15 +10,15 @@ public class Main {
     }
 
     int executar(String[] args) {
-        var leitorOpcoesCLI = new LeitorOpcoesCLI();
-        leitorOpcoesCLI.ler(args);
 
         boolean modoVerboso = true;
-        try {
+        
+        try (SeContainer container =  SeContainerInitializer.newInstance().initialize();){
+            var leitorOpcoesCLI = container.select(LeitorOpcoesCLI.class).get();
             ParametrosCotuba parametros = leitorOpcoesCLI.ler(args);
         
             modoVerboso = parametros.isModoVerboso();
-            var cotubaService = new CotubaService();
+            var cotubaService = container.select(CotubaService.class).get();
             cotubaService.executar(parametros);
 
             System.out.println("Arquivo gerado com sucesso: " + parametros.getArquivoDeSaida());

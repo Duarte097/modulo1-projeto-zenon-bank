@@ -10,9 +10,12 @@ import java.util.List;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 
-public class GeradorEPUB {
+import jakarta.enterprise.context.ApplicationScoped;
 
-    public void gerarEPUB(Ebook ebook) {
+@ApplicationScoped
+public class GeradorEPUB implements GeradorEbook {
+
+    public void gerar(Ebook ebook) {
 
         List<Capitulo> capitulos = ebook.getCapitulos();
         Path arquivoSaida = ebook.getArquivoSaida();

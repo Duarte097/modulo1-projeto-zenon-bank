@@ -12,6 +12,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+@FormatoEbookQualifier(FormatoEbook.EPUB)
 @ApplicationScoped
 public class GeradorEPUB implements GeradorEbook {
 

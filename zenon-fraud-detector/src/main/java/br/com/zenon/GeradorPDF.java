@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
+
+@FormatoEbookQualifier(FormatoEbook.PDF)
 @ApplicationScoped
 public class GeradorPDF implements GeradorEbook {
 

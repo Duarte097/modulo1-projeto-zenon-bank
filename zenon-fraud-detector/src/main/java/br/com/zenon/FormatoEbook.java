@@ -1,5 +1,5 @@
 package br.com.zenon;
 
 public enum FormatoEbook {
-    EPUB, PDF
+    EPUB, PDF, HTML
 }

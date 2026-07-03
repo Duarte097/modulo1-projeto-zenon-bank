@@ -2,36 +2,8 @@ package br.com.zenon;
 
 import java.nio.file.Path;
 
-public class ParametrosCotuba {
-    private Path diretorioDosMD;
-    private FormatoEbook formato;
-    private Path arquivoDeSaida;
-    private boolean modoVerboso = false;
-    
-    public Path getDiretorioDosMD() {
-        return diretorioDosMD;
+public record ParametrosCotuba(Path diretorioDosMD,FormatoEbook formato,Path arquivoDeSaida,boolean modoVerboso) {
+    ParametrosCotuba(Path diretorioDosMD, FormatoEbook formato, Path arquivoDeSaida) {
+        this(diretorioDosMD, formato, arquivoDeSaida, false);
     }
-    public void setDiretorioDosMD(Path diretorioDosMD) {
-        this.diretorioDosMD = diretorioDosMD;
-    }
-    public FormatoEbook getFormato() {
-        return formato;
-    }
-    public void setFormato(FormatoEbook formato) {
-        this.formato = formato;
-    }
-    public Path getArquivoDeSaida() {
-        return arquivoDeSaida;
-    }
-    public void setArquivoDeSaida(Path arquivoDeSaida) {
-        this.arquivoDeSaida = arquivoDeSaida;
-    }
-    public boolean isModoVerboso() {
-        return modoVerboso;
-    }
-    public void setModoVerboso(boolean modoVerboso) {
-        this.modoVerboso = modoVerboso;
-    }
-
-    
 }

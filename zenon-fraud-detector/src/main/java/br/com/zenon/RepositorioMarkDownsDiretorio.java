@@ -12,7 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class RepositorioMarkDownsDiretorio implements RepositorioMarkDown {
-    public List<Capitulo> buscar(Path diretorioDosMD) {
+    public List<MarkDown> buscar(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
         try (Stream<Path> streamMDs = Files.list(diretorioMD)) {
             List<Path> arquivosMD = streamMDs
@@ -27,15 +27,11 @@ public class RepositorioMarkDownsDiretorio implements RepositorioMarkDown {
 
             return arquivosMD.stream().map(arquivoMD -> {
                 try{
-                var capitulo = new Capitulo();
-                String markDown = Files.readString(arquivoMD);
-                capitulo.setMarkDown(markDown);
-                capitulo.setArquivoMarkDown(arquivoMD);
-
-                return capitulo;
-            } catch (IOException ex) {
-                throw new IllegalStateException("Erro ao ler arquivos .md em " + arquivoMD, ex);
-            }
+                    String conteudo = Files.readString(arquivoMD);
+                    return new MarkDown(conteudo, arquivoMD)
+                } catch (IOException ex) {
+                    throw new IllegalStateException("Erro ao ler arquivos .md em " + arquivoMD, ex);
+                }
         }).toList();
 
         } catch (IOException ex) {

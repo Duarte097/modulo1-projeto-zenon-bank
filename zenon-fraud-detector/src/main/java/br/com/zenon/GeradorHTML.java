@@ -22,7 +22,7 @@ public class GeradorHTML implements GeradorEbook {
 
             int i = 1;
             Map<Capitulo, Path> htmlDoCapitulo = new LinkedHashMap<>();
-            for (Capitulo capitulo : ebook.getCapitulos()) {
+            for (Capitulo capitulo : ebook.capitulos()) {
                 String nomeArquivoHTML = obterNomeArquivoHtml(capitulo);
                 Path arquivoHTML = diretorioHtml.resolve(nomeArquivoHTML);
                 htmlDoCapitulo.put(capitulo, arquivoHTML);
@@ -53,7 +53,7 @@ public class GeradorHTML implements GeradorEbook {
 
     private void escreveSumario(Ebook ebook, Path diretorioHtml, Map<Capitulo, Path> htmlDoCapitulo) {
 
-        String itensSumarioHtml = ebook.getCapitulos().stream().map(capitulo -> {
+        String itensSumarioHtml = ebook.capitulos().stream().map(capitulo -> {
             """
                 <li><a href="%s">%s</a></li>
             """.formatted(htmlDoCapitulo.get(capitulo).getFileName(), capitulo.getTitulo());

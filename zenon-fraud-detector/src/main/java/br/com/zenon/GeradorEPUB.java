@@ -18,22 +18,22 @@ public class GeradorEPUB implements GeradorEbook {
 
     public void gerar(Ebook ebook) {
 
-        List<Capitulo> capitulos = ebook.getCapitulos();
-        Path arquivoSaida = ebook.getArquivoSaida();
+        List<Capitulo> capitulos = ebook.capitulos();
+        Path arquivoSaida = ebook.arquivoSaida();
 
         try {
             var epub = new Book();
 
             //TODO: definir título e autor para o livro
-            epub.getMetadata().addTitle(ebook.getTitulo());
-            epub.getMetadata().addAuthor(new Author(ebook.getAutor()));
+            epub.getMetadata().addTitle(ebook.titulo());
+            epub.getMetadata().addAuthor(new Author(ebook.autor()));
 
             boolean[] ehPrimeiroCapitulo = {true};
 
 
             capitulos.forEach(capitulo -> {
-                String html = capitulo.getHtml();
-                String tituloDoCapitulo = capitulo.getTitulo();
+                String html = capitulo.html();
+                String tituloDoCapitulo = capitulo.titulo();
 
                 try {
                     StringWriter stringWriter = new StringWriter();
@@ -45,7 +45,7 @@ public class GeradorEPUB implements GeradorEbook {
 
                     writer.writeStartElement("head");
                     writer.writeStartElement("title");
-                    writer.writeCharacters(ebook.getTitulo());
+                    writer.writeCharacters(ebook.titulo());
                     writer.writeEndElement(); // title
                     writer.writeEndElement(); // head
 

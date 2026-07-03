@@ -1,49 +1,12 @@
 package br.com.zenon;
 
-public class Ebook {
-    private String titulo;
-    private String autor;
-    private FormatoEbook formato;
-    private List<Capitulo> capitulos;
-    private Path arquivoSaida;
+import java.util.List;
 
-    public String getTitulo() {
-        return titulo;
-    }
+import com.itextpdf.kernel.geom.Path;
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+import io.soabase.recordbuilder.core.RecordBuilder;
 
-    public String getAutor() {
-        return autor;
-    }
+@RecordBuilder
+public record Ebook(String titulo, String autor, FormatoEbook formato, List<Capitulo> capitulos, Path arquivoSaida) {
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public FormatoEbook getFormato() {
-        return formato;
-    }
-
-    public void setFormato(FormatoEbook formato) {
-        this.formato = formato;
-    }
-
-    public List<Capitulo> getCapitulos() {
-        return capitulos;
-    }
-
-    public void setCapitulos(List<Capitulo> capitulos) {
-        this.capitulos = capitulos;
-    }
-
-    public Path getArquivoSaida() {
-        return arquivoSaida;
-    }
-
-    public void setArquivoSaida(Path arquivoSaida) {
-        this.arquivoSaida = arquivoSaida;
-    }
 }

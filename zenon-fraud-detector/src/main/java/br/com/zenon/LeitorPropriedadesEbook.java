@@ -3,5 +3,5 @@ package br.com.zenon;
 import java.nio.file.Path;
 
 public interface LeitorPropriedadesEbook {
-    void ler(Path diretorioMD, Ebook ebook);
+    void ler(Path diretorioMD, EbookBuilder ebookBuilder);
 }

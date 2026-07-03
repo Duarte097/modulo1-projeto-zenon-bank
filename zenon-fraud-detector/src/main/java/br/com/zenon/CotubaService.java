@@ -27,23 +27,24 @@ public class CotubaService {
     }
     
     public void executar(ParametrosCotuba parametros) {
-        Path diretorioMDs = parametros.getDiretorioDosMD();
+        Path diretorioMDs = parametros.diretorioDosMD();
 
-        List<Capitulo> capitulos = repositorioMarkDowns.buscar(parametros.getDiretorioDosMD());
+        List<MarkDown> markDowns = repositorioMarkDowns.buscar(parametros.diretorioDosMD());
 
-        redenrizadorMarkDown.renderizar(capitulos);
+        List<Capitulo> capitulos = redenrizadorMarkDown.renderizar(markDowns);
 
-        var ebook = new Ebook();
-        leitorPropriedadesEbook.ler(parametros.getDiretorioDosMD(), ebook);
-        ebook.setCapitulos(capitulos);
-        ebook.setArquivoSaida(parametros.getArquivoDeSaida());
-        ebook.setFormato(parametros.getFormato());
-        ebook.setArquivoSaida(parametros.getArquivoDeSaida());
+        var propriedadesEbook = leitorPropriedadesEbook.ler(diretorioMDs);
+        var ebook = EbookBuilder.builder()
+            .capitulos(capitulos)
+            .arquivoSaida(parametros.arquivoDeSaida())
+            .formato(parametros.formato())
+            .arquivoSaida(parametros.arquivoDeSaida())
+            .titulo(propriedadesEbook.titulo())
+            .autor(propriedadesEbook.autor())
+            .build();
 
-        GeradorEbook gerador;
-        FormatoEbook formato = ebook.getFormato();
-        GeradorEbook geradorEbook = gerador.select(FormatoEbookFilter.of(formato)).get();
+        GeradorEbook geradorEbook = geradoresEbook.select(FormatoEbookFilter.of(ebook.formato())).get();
 
-        gerador.gerar(ebook);
+        geradorEbook.gerar(ebook);
     }
 }

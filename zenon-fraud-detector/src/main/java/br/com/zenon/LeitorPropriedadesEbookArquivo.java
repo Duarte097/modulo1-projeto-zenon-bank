@@ -12,7 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class LeitorPropriedadesEbookArquivo implements LeitorPropriedadesEbook {
-    public void ler(Path diretorioMD, Ebook ebook) {
+    public PropriedadesEbook ler(Path diretorioMD) {
 
         Path arquivoProperties = diretorioMD.resolve("ebook.properties");
 
@@ -32,8 +32,7 @@ public class LeitorPropriedadesEbookArquivo implements LeitorPropriedadesEbook {
         String autor = proerties.getProperty("cotuba.ebook.autor");
         validarPropriedade(autor, "cotuba.ebook.autor");
 
-        ebook.setTitulo(titulo);
-        ebook.setAutor(autor);
+        return new PropriedadesEbook(titulo, autor);
     }
 
     private static void validarPropriedade(String valor, String propriedade) {

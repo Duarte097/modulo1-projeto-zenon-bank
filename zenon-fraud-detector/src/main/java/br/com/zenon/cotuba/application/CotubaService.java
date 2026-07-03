@@ -49,5 +49,9 @@ public class CotubaService implements CotubaUseCase {
         GeradorEbook geradorEbook = geradoresEbook.select(FormatoEbookFilter.of(ebook.formato())).get();
 
         geradorEbook.gerar(ebook, parametros.arquivoDeSaida());
+
+        for (Plugin plugin : ServiceLoader.load(Plugin.class)) {
+            plugin.aposGeracao(ebook);
+        }
     }
 }

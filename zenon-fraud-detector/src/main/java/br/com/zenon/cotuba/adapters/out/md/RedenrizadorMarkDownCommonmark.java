@@ -52,6 +52,14 @@ public class RedenrizadorMarkDownCommonmark implements RedenrizadorMarkDown {
             try {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 String html = renderer.render(document);
+
+                for (Plugin plugin : ServiceLoader.load(Plugin.class)) {
+                    String htmlProcessado = plugin.aposRenderizacao(html);
+                    if(htmlProcessado != null && !htmlProcessado.isBlank()) {
+                        html = htmlProcessado;
+                    }
+                }
+
                 capitulo.html(html);
 
             } catch (Exception ex) {

@@ -10,11 +10,12 @@ import java.util.stream.Stream;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+
 @ApplicationScoped
 public class RepositorioMarkDownsDiretorio implements RepositorioMarkDown {
     public List<MarkDown> buscar(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
-        try (Stream<Path> streamMDs = Files.list(diretorioMD)) {
+        try (Stream<Path> streamMDs = Files.list(diretorioDosMD)) {
             List<Path> arquivosMD = streamMDs
                     .filter(matcher::matches)
                     .sorted()
@@ -22,13 +23,14 @@ public class RepositorioMarkDownsDiretorio implements RepositorioMarkDown {
 
             if (arquivosMD.isEmpty()) {
                 throw new IllegalStateException(
-                        "Não foram encontrados capítulos (arquivos .md) no diretório: " + diretorioMD.toAbsolutePath());
+                        "Não foram encontrados capítulos (arquivos .md) no diretório: " + diretorioDosMD.toAbsolutePath());
             }
 
             return arquivosMD.stream().map(arquivoMD -> {
                 try{
                     String conteudo = Files.readString(arquivoMD);
-                    return new MarkDown(conteudo, arquivoMD)
+                    String nome = arquivoMD.getFileName().toString();
+                    return new MarkDown(nome, conteudo);
                 } catch (IOException ex) {
                     throw new IllegalStateException("Erro ao ler arquivos .md em " + arquivoMD, ex);
                 }

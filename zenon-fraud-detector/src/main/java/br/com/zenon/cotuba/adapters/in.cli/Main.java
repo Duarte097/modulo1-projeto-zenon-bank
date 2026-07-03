@@ -18,8 +18,8 @@ public class Main {
             ParametrosCotuba parametros = leitorOpcoesCLI.ler(args);
         
             modoVerboso = parametros.modoVerboso();
-            var cotubaService = container.select(CotubaService.class).get();
-            cotubaService.executar(parametros);
+            var cotubaUseCase = container.select(CotubaUseCase.class).get();
+            cotubaUseCase.executar(parametros);
 
             System.out.println("Arquivo gerado com sucesso: " + parametros.arquivoDeSaida());
             return 0;

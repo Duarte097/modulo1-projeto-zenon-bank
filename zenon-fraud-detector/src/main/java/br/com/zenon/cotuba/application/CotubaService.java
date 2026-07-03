@@ -3,13 +3,16 @@ package br.com.zenon;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.jmolecules.ddd.annotation.Service;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Any;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
+@Service    
 @ApplicationScoped
-public class CotubaService {
+public class CotubaService implements CotubaUseCase {
 
     private final RedenrizadorMarkDownCommonmark redenrizadorMarkDown;
     private final LeitorPropriedadesEbookArquivo leitorPropriedadesEbook;
@@ -45,6 +48,6 @@ public class CotubaService {
 
         GeradorEbook geradorEbook = geradoresEbook.select(FormatoEbookFilter.of(ebook.formato())).get();
 
-        geradorEbook.gerar(ebook);
+        geradorEbook.gerar(ebook, parametros.arquivoDeSaida());
     }
 }

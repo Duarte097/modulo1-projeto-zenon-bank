@@ -56,7 +56,7 @@ public class RedenrizadorMarkDownCommonmark implements RedenrizadorMarkDown {
 
             } catch (Exception ex) {
                 throw new IllegalStateException(
-                        "Erro ao renderizar para HTML o arquivo " + markDown.arquivo(), ex);
+                        "Erro ao renderizar para HTML o arquivo " + markDown.nome(), ex);
             }
 
 

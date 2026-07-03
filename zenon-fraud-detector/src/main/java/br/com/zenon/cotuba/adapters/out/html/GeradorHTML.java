@@ -15,8 +15,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class GeradorHTML implements GeradorEbook {
 
     @Override
-    public void gerar(Ebook ebook) {
-        Path arquivoSaida = ebook.getArquivoSaida();
+    public void gerar(Ebook ebook, Path arquivoSaida) {
         try {
             Path diretorioHtml = Files.createDirectory(arquivoSaida);
 

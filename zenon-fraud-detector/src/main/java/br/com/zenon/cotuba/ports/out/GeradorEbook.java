@@ -1,5 +1,5 @@
 package br.com.zenon;
 
 public interface GeradorEbook {
-    void gerar(Ebook ebook);
+    byte[] gerar(Ebook ebook);
 }

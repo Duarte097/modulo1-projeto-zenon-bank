@@ -16,10 +16,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class GeradorEPUB implements GeradorEbook {
 
-    public void gerar(Ebook ebook) {
+    public void gerar(Ebook ebook, Path arquivoSaida) {
 
         List<Capitulo> capitulos = ebook.capitulos();
-        Path arquivoSaida = ebook.arquivoSaida();
 
         try {
             var epub = new Book();
@@ -70,7 +69,7 @@ public class GeradorEPUB implements GeradorEbook {
                     epub.getGuide().addReference(new GuideReference(chapter, "text", "Start Reading"));
                     ehPrimeiroCapitulo[0] = false;
                 }
-            })
+            });
 
 
             var epubWriter = new EpubWriter();

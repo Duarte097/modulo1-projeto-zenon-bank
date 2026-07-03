@@ -10,14 +10,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class GeradorPDF implements GeradorEbook {
 
-    public void gerar(Ebook ebook) {
+    public void gerar(Ebook ebook, Path arquivoSaida) {
 
         List<Capitulo> capitulos = ebook.capitulos();
-        Path arquivoSaida = ebook.arquivoSaida();
 
         try (var writer = new PdfWriter(Files.newOutputStream(arquivoSaida));
-             var pdf = new PdfDocument(writer);
-             var pdfDocument = new Document(pdf)) {
+            var pdf = new PdfDocument(writer);
+            var pdfDocument = new Document(pdf)) {
 
             pdf.getDocumentInfo().setTitle(ebook.titulo());
             pdf.getDocumentInfo().setAuthor(ebook.autor());

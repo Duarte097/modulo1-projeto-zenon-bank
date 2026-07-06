@@ -31,10 +31,10 @@ public class PluginEstatisticas implements CotubaPlugin {
             }
         }
 
-        for(Map.Entry<String, Integer> contagem : contador.entrySet()){
-            String palavra = contagem.getKey();
-            Integer ocorrencias = contagem.getValue();
-            System.out.printf("'%s' : %d\n", palavra, ocorrencias);
+        for(ContadorPalavras.ContagemPalavra contagem : contador){
+            String palavra = contagem.palavra();
+            Integer ocorrencias = contagem.ocorrencias();
+            System.out.printf("'%s' : %d\n", contagem.palavra(), contagem.ocorrencias());
         }
     }
 }

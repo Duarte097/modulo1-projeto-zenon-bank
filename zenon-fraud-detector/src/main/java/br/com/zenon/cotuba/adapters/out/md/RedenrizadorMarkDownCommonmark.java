@@ -53,8 +53,8 @@ public class RedenrizadorMarkDownCommonmark implements RedenrizadorMarkDown {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 String html = renderer.render(document);
 
-                for (Plugin plugin : ServiceLoader.load(Plugin.class)) {
-                    String htmlProcessado = plugin.aposRenderizacao(html);
+                for (CotubaPluginAposRedenrizacao plugin : ServiceLoader.load(CotubaPluginAposRedenrizacao.class)) {
+                    String htmlProcessado = plugin.aposRedenrizacao(html);
                     if(htmlProcessado != null && !htmlProcessado.isBlank()) {
                         html = htmlProcessado;
                     }

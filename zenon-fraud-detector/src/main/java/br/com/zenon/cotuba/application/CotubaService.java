@@ -50,7 +50,7 @@ public class CotubaService implements CotubaUseCase {
 
         geradorEbook.gerar(ebook, parametros.arquivoDeSaida());
 
-        for (Plugin plugin : ServiceLoader.load(Plugin.class)) {
+        for (CotubaPluginAposGeracao plugin : ServiceLoader.load(CotubaPluginAposGeracao.class)) {
             plugin.aposGeracao(ebook);
         }
     }

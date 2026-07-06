@@ -1,6 +1,6 @@
 package br.com.zenon.tema;
 
-public class PluginTemaCSS implements CotubaPlugin{
+public class PluginTemaCSS implements CotubaPluginAposRedenrizacao {
 
     //
 
@@ -23,10 +23,5 @@ public class PluginTemaCSS implements CotubaPlugin{
                 %s
                 """.formatted(html);
     }
-
-    @Override
-    public String aposGeracao(Ebook ebook){
-    }
-
 
 }

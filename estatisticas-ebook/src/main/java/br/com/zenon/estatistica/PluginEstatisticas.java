@@ -6,12 +6,7 @@ import org.w3c.dom.Document;
 
 import java.util.Map;
 
-public class PluginEstatisticas implements CotubaPlugin {
-
-    @Override
-    public String aposRenderizacao(String html){
-        return "";
-    }
+public class PluginEstatisticas implements CotubaPluginAposGeracao {
 
     @Override
     public void aposGeracao(Ebook ebook){
